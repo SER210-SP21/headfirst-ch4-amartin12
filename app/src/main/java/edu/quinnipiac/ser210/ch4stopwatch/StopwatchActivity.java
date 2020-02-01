@@ -12,15 +12,28 @@ import java.util.Locale;
 public class StopwatchActivity extends AppCompatActivity {
 
     private int seconds = 0; // record the number of seconds passed
-    private boolean running;
+    private boolean running; // is the stop watch running?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
+        if (savedInstanceState != null) {  // store activity state by getting values stored in bundle
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
 
         runTimer(); // seperate method to update the stopwatch. Start when activity is created
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
+
+    }
+
+
 
     //Start the stopwatch running when the Start button is clicked.
     public void onClickStart(View view) {
